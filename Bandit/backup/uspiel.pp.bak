@@ -1,0 +1,115 @@
+unit uspiel;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils;
+
+type
+
+	{ TSpiel }
+
+  TSpiel = class(TObject)
+    private
+      aiFelder : array[1..3] of Integer;
+      iAnzahl, iGuthaben : Integer;
+      procedure SetzeEinsatz;
+      procedure Auswertung;
+    public
+      procedure NeueWerte;
+      function sGibAnzeige(iIndex : Integer) : string;
+      function sGibGuthaben(bGestoppt : Boolean) : string;
+      function bIstBeendet : Boolean;
+      function sGibAnzahl : string;
+      procedure NeuesSpiel;
+      constructor Create;
+      destructor Destroy; reintroduce;
+	end;
+
+
+implementation
+
+var
+  iNr : Integer;
+
+{ TSpiel }
+
+procedure TSpiel.SetzeEinsatz;
+begin
+  iGuthaben := iGuthaben -1;
+  iAnzahl := iGuthaben;
+end;
+
+procedure TSpiel.Auswertung;
+begin
+  if (aiFelder[1] = aiFelder[2]) and (aiFelder[2] = aiFelder[3]) then
+    iGuthaben := iGuthaben + 8
+  else if aiFelder[1] = aiFelder[3] then
+    iGuthaben := iGuthaben + 4;
+end;
+
+procedure TSpiel.NeueWerte;
+begin
+  for iNr := 1 to 3 do
+  begin
+    aiFelder[iNr] := random(3) + 1;
+	end;
+end;
+
+function TSpiel.sGibAnzeige(iIndex : Integer) : string;
+begin
+  case aiFelder[iIndex] of
+  1: Result := 'A';
+  2: Result := 'B';
+  3: Result := 'C';
+	end;
+end;
+
+function TSpiel.sGibGuthaben(bGestoppt : Boolean) : string;
+begin
+  if bGestoppt then
+  begin
+    Auswertung;
+    Result := IntToStr(iGuthaben);
+	end
+  else
+    Result := IntToStr(iGuthaben);
+end;
+
+function TSpiel.bIstBeendet : Boolean;
+begin
+  if iGuthaben = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+function TSpiel.sGibAnzahl : string;
+begin
+  SetzeEinsatz;
+  Result := IntToStr(iAnzahl);
+end;
+
+procedure TSpiel.NeuesSpiel;
+begin
+  iGuthaben := 5;
+  iAnzahl := 5;
+end;
+
+constructor TSpiel.Create;
+begin
+  inherited Create;
+  Randomize;
+  iGuthaben := 1;
+  iAnzahl := 1;
+end;
+
+destructor TSpiel.Destroy;
+begin
+  inherited Destroy;
+end;
+
+end.
+

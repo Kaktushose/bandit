@@ -1,0 +1,113 @@
+object FBandit: TFBandit
+  Left = 531
+  Height = 264
+  Top = 238
+  Width = 259
+  Caption = 'Bandit'
+  ClientHeight = 264
+  ClientWidth = 259
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.6.4.0'
+  object LNoch: TLabel
+    Left = 40
+    Height = 15
+    Top = 32
+    Width = 29
+    Caption = 'Noch'
+    ParentColor = False
+  end
+  object ESpiele: TEdit
+    Left = 96
+    Height = 23
+    Top = 24
+    Width = 32
+    Enabled = False
+    TabOrder = 0
+    Text = '5'
+  end
+  object LSpiele: TLabel
+    Left = 152
+    Height = 15
+    Top = 32
+    Width = 31
+    Caption = 'Spiele'
+    ParentColor = False
+  end
+  object EBuchstabe1: TEdit
+    Left = 40
+    Height = 23
+    Top = 80
+    Width = 56
+    Enabled = False
+    TabOrder = 1
+  end
+  object EBuchstabe2: TEdit
+    Left = 104
+    Height = 23
+    Top = 80
+    Width = 56
+    Enabled = False
+    TabOrder = 2
+  end
+  object EBuchstabe3: TEdit
+    Left = 168
+    Height = 23
+    Top = 80
+    Width = 56
+    Enabled = False
+    TabOrder = 3
+  end
+  object BStart: TButton
+    Left = 40
+    Height = 25
+    Top = 136
+    Width = 75
+    Caption = 'Start'
+    OnClick = BStartClick
+    TabOrder = 4
+  end
+  object BStopp: TButton
+    Left = 144
+    Height = 25
+    Top = 136
+    Width = 75
+    Caption = 'Stopp'
+    Enabled = False
+    OnClick = BStoppClick
+    TabOrder = 5
+  end
+  object LGuthaben: TLabel
+    Left = 56
+    Height = 15
+    Top = 184
+    Width = 52
+    Caption = 'Guthaben'
+    ParentColor = False
+  end
+  object EGuthaben: TEdit
+    Left = 115
+    Height = 23
+    Top = 176
+    Width = 48
+    Enabled = False
+    TabOrder = 6
+    Text = '5'
+  end
+  object BNeuesSpiel: TButton
+    Left = 88
+    Height = 25
+    Top = 215
+    Width = 75
+    Caption = 'Neues Spiel'
+    OnClick = BNeuesSpielClick
+    TabOrder = 7
+  end
+  object TiZeit: TTimer
+    Enabled = False
+    Interval = 250
+    OnTimer = TiZeitTimer
+    left = 8
+    top = 212
+  end
+end

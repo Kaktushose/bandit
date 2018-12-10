@@ -1,0 +1,109 @@
+unit ubandit;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+	ExtCtrls, uspiel;
+
+type
+
+	{ TFBandit }
+
+  TFBandit = class(TForm)
+		BStart : TButton;
+		BStopp : TButton;
+		BNeuesSpiel : TButton;
+		ESpiele : TEdit;
+		EBuchstabe1 : TEdit;
+		EBuchstabe2 : TEdit;
+		EBuchstabe3 : TEdit;
+		EGuthaben : TEdit;
+		LNoch : TLabel;
+		LSpiele : TLabel;
+		LGuthaben : TLabel;
+		TiZeit : TTimer;
+		procedure BNeuesSpielClick(Sender : TObject);
+    procedure BStartClick(Sender : TObject);
+    procedure BStoppClick(Sender : TObject);
+    procedure FormCreate(Sender : TObject);
+		procedure FormDestroy(Sender : TObject);
+		procedure TiZeitTimer(Sender : TObject);
+  private
+    { private declarations }
+  public
+    { public declarations }
+  end;
+
+var
+  FBandit : TFBandit;
+  oSpiel : TSpiel;
+
+implementation
+
+{$R *.lfm}
+
+{ TFBandit }
+
+procedure TFBandit.FormCreate(Sender : TObject);
+begin
+  //Spielobjekt wird erzeugt
+  oSpiel := TSpiel.Create;
+end;
+
+procedure TFBandit.BStoppClick(Sender : TObject);
+begin
+  //Spiel wird gestoppt
+  TiZeit.Enabled := False;
+  BStopp.Enabled := False;
+  EGuthaben.Text := oSpiel.sGibGuthaben(True);
+  //Wenn das Spiel beendet ist, werden alle Buttons deaktiviert
+  if oSpiel.bIstBeendet then
+    BStart.Enabled := False
+  else
+    BStart.Enabled := True;
+
+end;
+
+procedure TFBandit.BStartClick(Sender : TObject);
+begin
+  //Spiel wird gestartet
+  BStopp.Enabled := True;
+  BStart.Enabled := False;
+  ESpiele.Text := oSpiel.sGibAnzahl;
+  TiZeit.Enabled := True;
+  EGuthaben.Text := oSpiel.sGibGuthaben(False);
+end;
+
+procedure TFBandit.BNeuesSpielClick(Sender : TObject);
+begin
+  //Neues Spiel wird gestartet und alle Werte zurückgesetzt
+  oSpiel.NeuesSpiel;
+  BStopp.Enabled := False;
+  BStart.Enabled := True;
+  EGuthaben.Text := '5';
+  ESpiele.Text := '5';
+end;
+
+procedure TFBandit.FormDestroy(Sender : TObject);
+begin
+  //Spielobjekt wird zerstört
+  oSpiel.Destroy;
+  oSpiel := nil;
+  oSpiel.Free;
+end;
+
+procedure TFBandit.TiZeitTimer(Sender : TObject);
+begin
+  //solange die Clock läuft wird ein neuer Wert generiert und dieser angzeigt
+  oSpiel.NeueWerte;
+  EBuchstabe1.Text := oSpiel.sGibAnzeige(1);
+  EBuchstabe2.Text := oSpiel.sGibAnzeige(2);
+  EBuchstabe3.Text := oSpiel.sGibAnzeige(3);
+
+end;
+
+end.
+
